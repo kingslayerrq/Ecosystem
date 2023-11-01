@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5997877159909779086
+--- !u!1 &938546031922146027
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,40 +8,41 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4867235025830970826}
-  - component: {fileID: 6241720730406320676}
-  - component: {fileID: 4015956797889153158}
-  - component: {fileID: -8494747965999044163}
-  - component: {fileID: 6180704055718756608}
-  m_Layer: 8
-  m_Name: bubble
-  m_TagString: playable
+  - component: {fileID: 6392317094064073657}
+  - component: {fileID: 5581635819117316675}
+  - component: {fileID: 26898369631545661}
+  - component: {fileID: 6114339634263204042}
+  - component: {fileID: 7819794603362604142}
+  - component: {fileID: 1455779227604298389}
+  m_Layer: 7
+  m_Name: seagull
+  m_TagString: sg
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4867235025830970826
+--- !u!4 &6392317094064073657
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5997877159909779086}
+  m_GameObject: {fileID: 938546031922146027}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.19, y: 6.61, z: 0}
-  m_LocalScale: {x: 0.1408914, y: 0.1408914, z: 0.1408914}
+  m_LocalPosition: {x: -12.77, y: 5.95, z: 0}
+  m_LocalScale: {x: 0.43431, y: 0.43431, z: 0.43431}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &6241720730406320676
+--- !u!212 &5581635819117316675
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5997877159909779086}
+  m_GameObject: {fileID: 938546031922146027}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -76,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: eeb6fd1fbf9f28e41aa6be77db981ca2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4a98fb071b14fb34d9462c4af147ca29, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -87,32 +88,38 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4015956797889153158
+--- !u!114 &26898369631545661
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5997877159909779086}
+  m_GameObject: {fileID: 938546031922146027}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 506814559db8a4e2686efbdc7bce5758, type: 3}
+  m_Script: {fileID: 11500000, guid: 46f42331d3743654dac8be4b3279d125, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blowDuration: 1
-  jiggleDuration: 2
-  flyDuration: 2
-  riseDuration: 3
---- !u!58 &-8494747965999044163
-CircleCollider2D:
+  currentState: 1
+  maxStamina: 1000
+  stamina: 10
+  flyDuration: 10
+  restDuration: 3
+  dir: 1
+  speed: 0.03
+  audioSource: {fileID: 0}
+  drownClip: {fileID: 8300000, guid: dd77f4c9ced8ff94cbb141e31bcedd0e, type: 3}
+  sgClip: {fileID: 8300000, guid: 6a5eea6d48557844dbf5f87839639bf6, type: 3}
+--- !u!61 &6114339634263204042
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5997877159909779086}
+  m_GameObject: {fileID: 938546031922146027}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 1fd60300805109a4d90fc6d63eaee470, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -132,31 +139,68 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 10.24, y: 10.24}
+    newSize: {x: 10.24, y: 10.24}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Radius: 5.1199994
---- !u!82 &6180704055718756608
+  m_Size: {x: 10.24, y: 10.24}
+  m_EdgeRadius: 0
+--- !u!50 &7819794603362604142
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 938546031922146027}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 0.0001
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0
+--- !u!82 &1455779227604298389
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5997877159909779086}
+  m_GameObject: {fileID: 938546031922146027}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 1b69ee85caaec684c9395f4d9bfa8885, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 6a5eea6d48557844dbf5f87839639bf6, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.299
+  m_Volume: 0.471
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 72
+  Priority: 128
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500

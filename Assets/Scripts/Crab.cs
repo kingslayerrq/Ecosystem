@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using System;
 
 [RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
@@ -20,6 +21,7 @@ public class Crab : MonoBehaviour
     [SerializeField] private float bubbleDetectionRad;
     [SerializeField] private float jmpForce;
     [SerializeField] private float lifeTime;
+    public static event Action<Lifeguard> OnBorn;
     public crabState curCrabState;
     public Rigidbody2D rb;
     public int dir;
@@ -105,13 +107,13 @@ public class Crab : MonoBehaviour
         stamina = 600;
         mateStaminaReq = 150;
         mateDesireLvl = 0;
-        mateDesireReq = 800;
+        mateDesireReq = 600;
         bubbleDetectionRad = 10;
         jmpForce = 0.2f;
         lifeTime = 5000;
         curCrabState = crabState.wander;
         rb = GetComponent<Rigidbody2D>();
-        dir = Random.Range(-1, 1) < 0 ? -1 : 1;
+        dir = UnityEngine.Random.Range(-1, 1) < 0 ? -1 : 1;
         originalScale = transform.localScale;
     }
     void handleWander()
@@ -172,6 +174,7 @@ public class Crab : MonoBehaviour
             {
                 var child = Instantiate(crab, transform.position + new Vector3(0, 2, 0), Quaternion.identity);
                 children.Add(child);
+                OnBorn?.Invoke(Lifeguard.Instance);
                 stamina -= mateStaminaReq;
                 mateDesireLvl = 0;
                 updateCrabState(crabState.wander);

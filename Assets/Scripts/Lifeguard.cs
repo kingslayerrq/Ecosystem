@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using System;
 
 [RequireComponent(typeof(AudioSource))]
 public class Lifeguard : MonoBehaviour
@@ -25,7 +26,15 @@ public class Lifeguard : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        Crab.OnBorn += Crab_OnBorn;
     }
+
+    private void Crab_OnBorn(Lifeguard obj)
+    {
+        updateLifeguardState(lifeguardState.whistle);
+        updateLifeguardState(lifeguardState.idle);
+    }
+
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -35,17 +44,21 @@ public class Lifeguard : MonoBehaviour
     }
     private void Update()
     {
-        if (curState != lifeguardState.blow) bubbleReload += 0.6f;
         if (curState == lifeguardState.idle)
         {
             handleIdle();
+            bubbleReload += 0.6f;
         }
+        
+        
     }
+   
     void updateLifeguardState(lifeguardState state)
     {
-        Debug.Log(curState + " going into " + state);
+        //Debug.Log(curState + " going into " + state);
         if (state != curState)
         {
+            curState = state;
             switch (state)
             {
                 case lifeguardState.whistle:
@@ -66,25 +79,32 @@ public class Lifeguard : MonoBehaviour
 
     void handleWhistle()
     {
+        curState = lifeguardState.whistle;
         if (!audioSource.isPlaying)
         {
             audioSource.clip = whistleClip;
             //audioSource.loop = true;
             audioSource.Play();
         }
-        if (bubbleReload >= bubbleCap)
+        else
         {
-            audioSource.Stop();
-            Debug.Log("stopped");
-            updateLifeguardState(lifeguardState.blow);
+            if (bubbleReload >= bubbleCap)
+            {
+                audioSource.Stop();
+                Debug.Log("stopped");
+                updateLifeguardState(lifeguardState.blow);
+            }
+            updateLifeguardState(lifeguardState.idle);
         }
     }
 
     void handleBlow()
     {
+        curState = lifeguardState.blow;
         if (totalBubble < 20)
         {
             StartCoroutine(blowBubbles(blowCount));
+            updateLifeguardState(lifeguardState.idle);
         }
         else
         {
@@ -99,18 +119,15 @@ public class Lifeguard : MonoBehaviour
 
     void handleIdle()
     {
-        if (audioSource.isPlaying) audioSource.Stop();
-        blowCount = Random.Range(1, 4);
+        //if (audioSource.isPlaying) audioSource.Stop();
+        blowCount = UnityEngine.Random.Range(1, 4);
         //Debug.Log("im blowing " +  blowCount);
         if (bubbleReload >= bubbleCap)
         {
             Debug.Log("???");
             updateLifeguardState(lifeguardState.blow);
         }
-        else
-        {
-            //updateLifeguardState(lifeguardState.whistle);
-        }
+
     }
 
     private IEnumerator blowBubbles(int numBubbles)
@@ -119,12 +136,11 @@ public class Lifeguard : MonoBehaviour
         for (int i = 0; i < numBubbles; i++)
         {
             audioSource.clip = blowClip;
-            audioSource.loop = false;
             audioSource.Play();
             Instantiate(bubble, transform.position, Quaternion.identity);
             totalBubble++;
+            yield return new WaitForSeconds(3.0f);
         }
-        yield return new WaitForSeconds(3.0f);
     }
 
     private IEnumerator DelayNextRound(float delay)
